@@ -1,9 +1,10 @@
 package com.nobodyiam.spring.in.action.reservation.client.controller;
 
-import com.google.common.collect.FluentIterable;
-
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.nobodyiam.spring.in.action.reservation.client.dto.Reservation;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collection;
-import java.util.Collections;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.nobodyiam.spring.in.action.reservation.client.dto.Reservation;
 
 /**
  * Created by Jason on 5/10/16.
@@ -31,7 +32,7 @@ public class ReservationApiGatewayRestController {
   private Collection<String> getReservationNamesFallback() {
     return Collections.emptyList();
   }
-
+//http://localhost:9999/reservations/names
   @RequestMapping("/names")
   @HystrixCommand(fallbackMethod = "getReservationNamesFallback")
   public Collection<String> getReservationNames() {
@@ -43,8 +44,14 @@ public class ReservationApiGatewayRestController {
     ResponseEntity<Resources<Reservation>> exchange = rt.exchange(
             "http://reservation-service/reservations",
             HttpMethod.GET, null, parameterizedTypeReference);
-
-    return FluentIterable.from(exchange.getBody().getContent())
-            .transform(Reservation::getReservationName).toList();
+    
+    Collection<Reservation> reservations =  exchange.getBody().getContent();
+    List<String> strs = new ArrayList<String>();
+    for (Reservation reservation : reservations) {
+    	strs.add(reservation.getReservationName());
+	}
+    return strs ;
+//    return FluentIterable.from(exchange.getBody().getContent())
+//            .transform(Reservation::getReservationName).toList();
   }
 }
