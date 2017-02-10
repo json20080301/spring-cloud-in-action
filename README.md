@@ -10,3 +10,6 @@ This is a demo Spring Boot project which shows the use of Spring Cloud families 
     - Hystrix
     - Zuul
     - Ribbon
+    
+    head first Eureka code 
+    http://baike.renwuyi.com/2016-12/18938.html
