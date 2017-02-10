@@ -16,19 +16,25 @@ import org.springframework.context.annotation.Bean;
 @EnableDiscoveryClient
 @SpringBootApplication
 public class ReservationServiceApplication {
-  @Bean
-  CommandLineRunner runner(ReservationRepository rr) {
-    return args -> {
-      rr.deleteAll();
+	@Bean
+	CommandLineRunner runner(final ReservationRepository rr) {
+		return new CommandLineRunner() {
+			@Override
+			public void run(String... paramArrayOfString) throws Exception {
+				rr.deleteAll();
+				Iterable<String>  it =	Splitter.on(",").omitEmptyStrings().trimResults().split("Tom, Jerry");
+				for (String x : it) {
+					rr.save(new Reservation(x));
+				}
+				for (Reservation  reservation : rr.findAll()) {
+					System.out.println(reservation);
+				} 
+			}
 
-      Splitter.on(",").omitEmptyStrings().trimResults().split("Tom, Jerry")
-              .forEach(x -> rr.save(new Reservation(x)));
-      rr.findAll().forEach(System.out::println);
-    };
-  }
+		};
+	}
 
-  public static void main(String[] args) {
-    new SpringApplicationBuilder(ReservationServiceApplication.class)
-            .run(args);
-  }
+	public static void main(String[] args) {
+		new SpringApplicationBuilder(ReservationServiceApplication.class).run(args);
+	}
 }
