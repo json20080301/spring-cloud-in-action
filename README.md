@@ -10,3 +10,7 @@ This is a demo Spring Boot project which shows the use of Spring Cloud families 
     - Hystrix
     - Zuul
     - Ribbon
+
+http://cloud.spring.io/spring-cloud-consul/
+
+http://projects.spring.io/spring-cloud/spring-cloud.html
