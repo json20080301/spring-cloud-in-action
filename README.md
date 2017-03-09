@@ -35,3 +35,5 @@ http://www.jdon.com/dl/best/spring-cloud-sleuth.html?utm_source=tuicool&utm_medi
     http://git.oschina.net/didispace/SpringCloud-Learning  打造Spring Cloud构建微服务架构的最全资料
     
     http://git.oschina.net/didispace/SpringBoot-Learning  Spring Boot教程与Spring Cloud教程
+    
+    http://blog.csdn.net/liaokailin/article/details/51470051
